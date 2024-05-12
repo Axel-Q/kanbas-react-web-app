@@ -10,6 +10,7 @@ import TOC from "./TOC";
 export default function Labs() {
     return (
         <div>
+            <h1>wangfan qian</h1>
             <h1>Labs</h1>
             <TOC/>
             <Routes>
