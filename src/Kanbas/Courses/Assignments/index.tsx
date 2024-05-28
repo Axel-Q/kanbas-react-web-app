@@ -41,7 +41,7 @@ export default function Assignments() {
                 </div>
             </div>
 
-            <ul id="wd-assignment" className="list-group rounded-0" style={{width: '130%'}}>
+            <ul id="wd-assignment" className="list-group rounded-0" style={{width: '100%'}}>
                 <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
                     <div className="wd-title p-3 ps-2 bg-secondary">
                         <BsGripVertical className="me-2 fs-3"/>

@@ -56,7 +56,7 @@ export default function Grades() {
             <div className="table-responsive">
                 <table className="table table-bordered">
                     <thead>
-                    <tr >
+                    <tr className={"table-secondary"}>
                         <th>Student Name</th>
                         <th>A1 SETUP</th>
                         <th>A2 HTML</th>
@@ -72,7 +72,7 @@ export default function Grades() {
                         <td>92.18%</td>
                         <td>66.22%</td>
                     </tr>
-                    <tr >
+                    <tr className={"table-secondary"}>
                         <td className="text-danger ">Christina Allen</td>
                         <td>100%</td>
                         <td>100%</td>
@@ -86,8 +86,8 @@ export default function Grades() {
                         <td>100%</td>
                         <td>100%</td>
                     </tr>
-                    <tr>
-                        <td>Han Bao</td>
+                    <tr className={"table-secondary "}>
+                        <td className={"text-danger"}>Han Bao</td>
                         <td>100%</td>
                         <td>100%</td>
                         <td>
@@ -102,7 +102,7 @@ export default function Grades() {
                         <td>98.37%</td>
                         <td>100%</td>
                     </tr>
-                    <tr>
+                    <tr className={"table-secondary"}>
                         <td className="text-danger">Siran Cao</td>
                         <td>100%</td>
                         <td>100%</td>

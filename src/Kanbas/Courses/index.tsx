@@ -12,7 +12,7 @@ export default function Courses() {
         <div id="wd-courses">
             <h2>Course 1234</h2>
             <hr />
-            <table>
+            <table className={"w-100"}>
                 <tr>
                     <td valign="top">
                         <CoursesNavigation />
