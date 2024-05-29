@@ -14,10 +14,10 @@ export default function Courses() {
             <hr />
             <table className={"w-100"}>
                 <tr>
-                    <td valign="top">
+                    <td valign="top" style={{width: "50px"}}>
                         <CoursesNavigation />
                     </td>
-                    <td valign="top">
+                    <td valign="top" >
                         <Routes>
                             <Route path="/" element={<Navigate to="Home" />} />
                             <Route path="Home" element={<Home/>} />

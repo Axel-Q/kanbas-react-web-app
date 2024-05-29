@@ -15,9 +15,10 @@
     width: 80%;
 }
 
-.search-icon {
+.search-icon3 {
   position: absolute;
     top: 70%;
+    left:3%;
   transform: translateY(-50%);
   color: #6c757d;
 }
@@ -25,7 +26,7 @@
 .search-icon2 {
   position: absolute;
     top: 70%;
-    left: 78%;
+    left: 82%;
   transform: translateY(-50%);
   color: #6c757d;
 }

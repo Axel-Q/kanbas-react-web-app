@@ -8,7 +8,7 @@ import { IoFunnelOutline } from "react-icons/io5";
 
 export default function Grades() {
     return (
-        <div id={"wd-grades-editor"} className={"container"} style={{width: "700px"}}>
+        <div id={"wd-grades-editor"} style={{width: "700px"}}>
             <div id={"function_btn"} className={"d-flex mb-3 justify-content-end"}>
                 <div className={"button-group me-2 button_style"}>
                     <FaFileImport/>
@@ -33,7 +33,7 @@ export default function Grades() {
                 <div className={"d-flex search-container"}>
                     <div className={"col-sm-8 me-5"}>
                         <label className={"col-form-label fw-bold"}>Student Names</label>
-                        <i className={"search-icon"}>
+                        <i className={"search-icon3"}>
                             <HiMiniMagnifyingGlass/>
                         </i>
                         <input type="search" className={"form-control"} placeholder={"Search Students"}
