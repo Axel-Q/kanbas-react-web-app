@@ -8,7 +8,7 @@ import { IoFunnelOutline } from "react-icons/io5";
 
 export default function Grades() {
     return (
-        <div id={"wd-grades-editor"} style={{width: "700px"}}>
+        <div id={"wd-grades-editor"} >
             <div id={"function_btn"} className={"d-flex mb-3 justify-content-end"}>
                 <div className={"button-group me-2 button_style"}>
                     <FaFileImport/>
