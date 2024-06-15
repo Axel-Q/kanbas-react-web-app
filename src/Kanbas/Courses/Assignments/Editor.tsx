@@ -1,39 +1,30 @@
+import React from "react";
+import {useParams, useLocation} from "react-router";
+import {assignment_details} from "../../Database";
+import { useNavigate } from 'react-router-dom';
+
 export default function AssignmentEditor() {
+    const {aid} = useParams()
+    const {pathname} = useLocation()
+    const details = assignment_details.find((detail) => detail._id === aid)
+    const descriptionHTML = details && details.description || "";
+    const points =  details && details.points
+    const dueDate = details && details.dueDate
+    const available = details && details.availableDate
+    const navigate = useNavigate();
+
     return (
         <div id="wd-assignments-editor" className={"container"}>
             <div className={"mb-3 "}>
-                <label htmlFor="wd-name">Assignment Name</label> <br/>
-                <input id="wd-name" value="A1" style={{width: "100%"}}/>
-            </div>
-            <div id="wd-description" className="mb-3 form-control" contentEditable="true"
-                 style={{width: "100%", height: "300px", overflow: "auto"}}>
-                The assignment is
-                <span className="text-danger ms-2">available online</span><br/><br/>
-                Submit a link to the landing page of your web application running on Netlify.<br/><br/>
-
-                The landing page should include the following: <br/><br/>
-                <ul>
-                    <li>
-                        Your full name and section
-                    </li>
-                    <li>
-                        Links to the Kanbas application
-                    </li>
-                    <li>
-                        Links to Kanbas appilcation
-                    </li>
-                    <li>
-                        links to all relevant source code repositories
-                    </li>
-                </ul>
-                The Kanbas application should include a linke to navigate back to the landing page
-            </div>
-
+                <label htmlFor="wd-description">Description</label>
+                <div id="wd-description" className="form-control mb-5 mt-3" style={{ width: "100%", height: "300px", overflow: "auto" }}
+                     dangerouslySetInnerHTML={{ __html: descriptionHTML }}>
+                </div>
 
             <div className="mb-3 row">
                 <label htmlFor="wd-points" className="col-sm-3 col-form-label">Points</label>
                 <div className="col-sm-9">
-                    <input id="wd-points" placeholder="100" className="form-control"/>
+                    <input id="wd-points" placeholder= {`${points}`} className="form-control"/>
                 </div>
             </div>
             <div className="mb-3 row">
@@ -108,18 +99,18 @@ export default function AssignmentEditor() {
                     <div className="mb-3 row">
                         <label htmlFor="wd-due-date" className="col-sm-3 col-form-label">Due Date</label>
                         <div className="col-sm-9">
-                            <input id="wd-due-date" value="2021-09-05" className="form-control"/>
+                            <input id="wd-due-date" value={`${dueDate}`} className="form-control"/>
                         </div>
                     </div>
 
                     <div className="mb-3 row">
                         <div className="col-sm-6">
                             <label htmlFor="wd-available-from" className="col-form-label">Available From</label>
-                            <input type="date" id="wd-available-from" value="2024-05-06" className="form-control"/>
+                            <input  id="wd-available-from" value={`${available}`} className="form-control"/>
                         </div>
                         <div className="col-sm-6">
                             <label htmlFor="wd-available-to" className="col-form-label">Until</label>
-                            <input type="date" id="wd-available-to" value="2024-05-20" className="form-control"/>
+                            <input  id="wd-available-to" value={`${dueDate}`} className="form-control"/>
                         </div>
                     </div>
                 </div>
@@ -128,9 +119,10 @@ export default function AssignmentEditor() {
             <hr className={"mt-5 mb-1"}/>
 
             <div className="d-flex justify-content-end mt-3">
-                <button type="button" className="btn btn-secondary me-3">Cancel</button>
-                <button type="button" className="btn btn-danger">Save</button>
+                <button type="button" className="btn btn-secondary me-3" onClick={() => navigate(-1)}>Cancel</button>
+                <button type="button" className="btn btn-danger" onClick={() => navigate(-1)}>Save</button>
             </div>
+        </div>
         </div>
     );
 }
