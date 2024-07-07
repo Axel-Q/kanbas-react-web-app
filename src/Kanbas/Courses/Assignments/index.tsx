@@ -65,7 +65,7 @@ export default function Assignments() {
                             id="wd-add-assignment"
                             className="btn btn-md btn-danger me-1"
                             onClick={() => {
-                                navigate('newAssignment')}}
+                                navigate('new')}}
                         >
                             + Assignment
                         </button>

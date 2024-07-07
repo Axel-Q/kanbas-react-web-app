@@ -178,7 +178,7 @@ export default function AssignmentEditor() {
                     }}>Cancel
                     </button>
                     <button type="button" className="btn btn-danger" onClick={() => {
-                        if (aid){
+                        if (aid && aid !== 'new'){
                             // If we're in edit mode, dispatch updateAssignment
                             saveAssignment(updatedDetails)
                         } else {
