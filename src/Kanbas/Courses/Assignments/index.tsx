@@ -11,9 +11,9 @@ import {Link, useNavigate} from "react-router-dom";
 import * as path from "node:path";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { useDispatch, useSelector} from "react-redux";
-import { deleteAssignment, updateAssignment} from "./reducer";
-import {useState} from "react";
-import AssignmentEditor from "./Editor";
+import { deleteAssignment, updateAssignment, setAssignment} from "./reducer";
+import {useEffect, useState} from "react";
+import * as client from "./client";
 
 
 export default function Assignments() {
@@ -23,6 +23,21 @@ export default function Assignments() {
     const {assignments} = useSelector((state:any) => state.assignmentsReducer)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const fetchAssignments = async () => {
+        const assignments = await client.findAssignmentsForCourse(cid as string)
+        dispatch(setAssignment(assignments));
+    };
+    useEffect(() => {
+        fetchAssignments();
+    }, []);
+
+    const removeAssignment = async (assignmentId: string) => {
+        await client.deleteAssignment(assignmentId);
+        dispatch(deleteAssignment(assignmentId));
+    }
+
+
+
 
     return (
         <div id="wd-assignments">
@@ -50,7 +65,7 @@ export default function Assignments() {
                             id="wd-add-assignment"
                             className="btn btn-md btn-danger me-1"
                             onClick={() => {
-                                navigate("newAssignment", {state: {courseId : cid}})}}
+                                navigate('newAssignment')}}
                         >
                             + Assignment
                         </button>
@@ -89,7 +104,7 @@ export default function Assignments() {
                                         </Link>
                                 </div>
                                 <div className="ms-auto">
-                                    <AssignmentControlButtons assignId={assign._id} deleteAssignment={deleteAssignment} courseId={cid}  />
+                                    <AssignmentControlButtons assignId={assign._id} deleteAssignment={removeAssignment} courseId={cid}  />
                              </div>
                             </li>
                         </ul>

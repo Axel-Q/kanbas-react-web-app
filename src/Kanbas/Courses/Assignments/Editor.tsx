@@ -4,14 +4,24 @@ import {assignments, assignment_details, courses} from "../../Database";
 import {useNavigate} from 'react-router-dom';
 import Assignments from "./index";
 import {useDispatch, useSelector} from "react-redux";
-import {addAssignment, updateAssignment} from "./reducer";
+import {addAssignment, updateAssignment, setAssignment} from "./reducer";
+import * as client from "./client";
+import {createAssignment} from "./client";
 
 export default function AssignmentEditor() {
-    const {aid} = useParams()
+    const {aid, cid} = useParams()
     const {state} = useLocation();
+    const location = useLocation()
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const [details, setDetails] = useState(state || assignment_details.find((detail) => detail._id === aid) || {});
+    const [details, setDetails] = useState(() => {
+        const initialDetails = location.state || assignment_details.find((detail) => detail._id === aid) || {};
+        return {
+            ...initialDetails
+        };
+    });
+
+
     const [description, setDescription] = useState(details.description || "unknown description")
     const [points, setPoints] = useState(details.points || 0)
     const [dueDate, setDueDate] = useState(details.due || "unknown date")
@@ -24,7 +34,19 @@ export default function AssignmentEditor() {
         points: Number(points), // Ensure points is a number
         due: dueDate,
         availability: available,
+        _id: aid
     };
+    const createAssignment = async (assignment: any) => {
+        const newAssignment = await client.createAssignment(cid || state.courseId, assignment);
+        dispatch(addAssignment(newAssignment));
+    }
+
+    const saveAssignment = async (assignment: any) => {
+        const status = await client.updateAssignment(assignment);
+        dispatch(updateAssignment(assignment));
+
+    }
+
 
 
     return (
@@ -156,27 +178,19 @@ export default function AssignmentEditor() {
                     }}>Cancel
                     </button>
                     <button type="button" className="btn btn-danger" onClick={() => {
-                        const newAssignment = {
-                            _id: aid || Date.now().toString(), // Use existing ID if in edit mode
-                            title: title,
-                            course: state?.courseId || '', // Handle case where state might be undefined
-                            modules: "Multiple Modules",
-                            availability: available,
-                            due: dueDate,
-                            points: Number(points), // Ensure points is a number
-                        };
-                        if (details._id) {
+                        if (aid){
                             // If we're in edit mode, dispatch updateAssignment
-                            dispatch(updateAssignment(updatedDetails));
+                            saveAssignment(updatedDetails)
                         } else {
                             // If we're in add mode, dispatch addAssignment
                             const newAssignment = {
-                                _id: Date.now().toString(), // Generate a new ID
-                                ...updatedDetails,
-                                course: state?.courseId || '', // Handle case where state might be undefined
+                                title: title,
                                 modules: "Multiple Modules",
+                                availability: available,
+                                due: dueDate,
+                                points: Number(points), // Ensure points is a number
                             };
-                            dispatch(addAssignment(newAssignment));
+                            createAssignment(newAssignment)
                         }
                         navigate(-1);
                     }}>Save

@@ -13,7 +13,7 @@ export default function AssignmentControlButtons({ assignId, deleteAssignment, c
     const handleDeleteClick = () => {
         const isConfirmed = window.confirm("Are you sure you want to delete this assignment?");
         if (isConfirmed) {
-            dispatch(deleteAssignment(assignId));
+            deleteAssignment(assignId);
         }
     };
 
