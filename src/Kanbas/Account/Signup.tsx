@@ -6,7 +6,7 @@ import {setCurrentUser} from "./reducer";
 
 export default function Signup() {
     const dispatch = useDispatch();
-    const [user, setUser] = useState<any>({});
+      const [user, setUser] = useState<any>({});
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const signup = async () => {

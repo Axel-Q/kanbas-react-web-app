@@ -9,6 +9,10 @@ export const signin = async (credentials: any) => {
   return response.data;
 };
 
+// f8c32b86-3543-4196-b97a-a3c512c465c8
+//                  f8c32b86-3543-4196-b97a-a3c512c465c8
+// ajs_anonymous_id=f8c32b86-3543-4196-b97a-a3c512c465c8
+
 export const profile = async () => {
   const response = await axiosWithCredentials.post(`${USERS_API}/profile`);
   return response.data;
