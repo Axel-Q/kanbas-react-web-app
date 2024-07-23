@@ -38,7 +38,7 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
                         <div className="wd-dashboard-course col mb-5" style={{width: "300px", height: "370px"}}>
                             <Link to={`/Kanbas/Courses/${course._id}/Home`} className="text-decoration-none">
                                 <div className="card rounded-3 overflow-hidden">
-                                    <img src={`images/${course.image}`} alt="shinchan1" height="200px"/>
+                                    <img src={course.image} alt={course.name} height="200px"/>
                                     <div className="card-body" style={{height: 220}}>
                                         <span className="wd-dashboard-course-link"
                                               style={{textDecoration: "none", color: "navy", fontWeight: "bold"}}>
@@ -48,7 +48,7 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
                                            style={{maxHeight: 53, overflow: "hidden"}}>
                                             {course.description}
                                         </p>
-                                        <Link to={`/Kanbas/Courses/${course._id}/Home`}
+                                        <Link to={`/Kanbas/Courses/${course.number}/Home`}
                                               className="btn btn-primary">Go</Link>
 
                                         <button onClick={(event) => {

@@ -57,8 +57,9 @@ export default function Kanbas() {
                         <Routes>
                             <Route path="/" element={<Navigate to="Dashboard"/>}/>
                             <Route path="Account/*" element={<Account/>}/>
-                            <Route path="Dashboard" element={
 
+                            <Route path="Dashboard" element={
+                            <ProtectedRoute>
                                 <Dashboard
                                 courses={courses}
                                 course={course}
@@ -66,7 +67,7 @@ export default function Kanbas() {
                                 addNewCourse={addNewCourse}
                                 deleteCourse={deleteCourse}
                                 updateCourse={updateCourse}/>
-
+                            </ProtectedRoute>
                             }/>
                             <Route path="Courses/:cid/*" element={
                                 <ProtectedRoute>

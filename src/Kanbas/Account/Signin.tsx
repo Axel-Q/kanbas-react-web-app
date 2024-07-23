@@ -3,9 +3,12 @@ import {Link, useNavigate} from "react-router-dom";
 import * as client from "./client"
 import {useDispatch} from "react-redux";
 import {setCurrentUser} from "./reducer";
+import { User } from "./client";
 
 export default function Signin() {
-    const [credentials, setCredentials] = useState<any>({});
+      const [credentials, setCredentials] = useState<User>({ _id: "",
+    username: "", password: "", firstName: "", lastName: "", role: "USER"
+  });
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const dispatch = useDispatch();
@@ -13,7 +16,6 @@ export default function Signin() {
         try {
             const currentUser = await client.signin(credentials);
             dispatch(setCurrentUser(currentUser));
-
             navigate("/Kanbas/Account/Profile");
         } catch (err: any) {
             setError(err.response.data.message);

@@ -79,6 +79,7 @@ export default function PeopleTable() {
                 <thead>
                 <tr>
                     <th>Name</th>
+                    <th>UserName & password</th>
                     <th>Login ID</th>
                     <th>Section</th>
                     <th>Role</th>
@@ -91,11 +92,12 @@ export default function PeopleTable() {
                     <tr key={user._id}>
                         <td className="wd-full-name text-nowrap">
                             <span onClick={() => handleNameClick(user._id)} style={{cursor: "pointer", color: "red"}}>
-                                    <span className="wd-first-name">{user.username}</span>
+                                    <span className="wd-first-name">{user.firstName}</span>
                                     <span> </span>
-                                    <span className="wd-last-name">{user.password}</span>
+                                    <span className="wd-last-name">{user.lastName}</span>
                                 </span>
                         </td>
+                        <td className="wd-username" style={{color: "green", width:"15%"}}>{user.username} | {user.password}</td>
                         <td className="wd-login-id">{user.loginId}</td>
                         <td className="wd-section">{user.section}</td>
                         <td className="wd-role">{user.role}</td>
