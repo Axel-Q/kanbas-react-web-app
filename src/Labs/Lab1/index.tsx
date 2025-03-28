@@ -74,7 +74,7 @@ export default function Lab1() {
                 Loading an image from internet<br />
                 <img id='wd-starship' width={400}
                     src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-ga
-                p2.jpg"/>
+                p2.jpg" alt=""/>
             </div>
             <div id='wd-textfield'>
                 <h4>Form test</h4>

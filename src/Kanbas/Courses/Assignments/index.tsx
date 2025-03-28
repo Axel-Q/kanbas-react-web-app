@@ -1,43 +1,114 @@
+import LessonControlButtons from "../Modules/LessonControlButtons"
+import {BsGripVertical} from "react-icons/bs";
+import {MdAssignment} from "react-icons/md";
+import {HiMiniMagnifyingGlass} from "react-icons/hi2";
+import './index.css'
+import {IoEllipsisVertical} from "react-icons/io5";
+import {FiPlus} from "react-icons/fi";
+import {assignments, modules} from "../../Database";
+import {useParams, useLocation} from "react-router";
+import {Link, useNavigate} from "react-router-dom";
+import * as path from "node:path";
+import AssignmentControlButtons from "./AssignmentControlButtons";
+import { useDispatch, useSelector} from "react-redux";
+import { deleteAssignment, updateAssignment, setAssignment} from "./reducer";
+import {useEffect, useState} from "react";
+import * as client from "./client";
+
+
 export default function Assignments() {
+    const {cid, aid} = useParams()
+    const {pathname} = useLocation()
+    const [assignment, setassignment] = useState("")
+    const {assignments} = useSelector((state:any) => state.assignmentsReducer)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const fetchAssignments = async () => {
+        const assignments = await client.findAssignmentsForCourse(cid as string)
+        dispatch(setAssignment(assignments));
+    };
+    useEffect(() => {
+        fetchAssignments();
+    }, []);
+
+    const removeAssignment = async (assignmentId: string) => {
+        await client.deleteAssignment(assignmentId);
+        dispatch(deleteAssignment(assignmentId));
+    }
+
+
+
+
     return (
         <div id="wd-assignments">
-            <input id="wd-search-assignment"
-                placeholder="Search for Assignments" />
-            <button id="wd-add-assignment-group">+ Group</button>
-            <button id="wd-add-assignment">+ Assignment</button>
-            <h3 id="wd-assignments-title">
-                ASSIGNMENTS 40% of Total <button>+</button>
-            </h3>
-            <ul id="wd-assignment-list">
-                <li className="wd-assignment-list-item">
-                    <a className="wd-assignment-link"
-                        href="#/Kanbas/Courses/1234/Assignments/123">
-                        A1 - ENV + HTML
-                    </a>
-                </li>
-                <div className="wd-assignment-details">
-                    Multiple Modules | <strong>available until</strong> May 6 at 12:00am
-                    | <strong>Due</strong> May 13 at 11:59pm | 100 pts
+            <div className="search-container d-flex w-100 mb-4"  >
+                <div className={"row flex-grow-1"} >
+                    <div className={"col-6"}>
+                        <i className="search-icon">
+                            <HiMiniMagnifyingGlass/>
+                        </i>
+                        <input
+                            type="text"
+                            className="form-control search-input text-md-center"
+                            id="wd-search-assignment"
+                            placeholder="Search..."
+                        />
+                    </div>
+                    <div className={"col-6 d-flex justify-content-end align-items-center"}  >
+                        <button
+                            id="wd-add-assignment-group"
+                            className="btn btn-md btn-secondary me-1"
+                        >
+                            + Group
+                        </button>
+                        <button
+                            id="wd-add-assignment"
+                            className="btn btn-md btn-danger me-1"
+                            onClick={() => {
+                                navigate('new')}}
+                        >
+                            + Assignment
+                        </button>
+                    </div>
+
                 </div>
-                <li className="wd-assignment-list-item">
-                    <a className="wd-assignment-link"
-                        href="#/Kanbas/Courses/1234/Assignments/123">
-                        A2 - CSS + BOOTSTRAP
-                    </a>
-                    <div className="wd-assignment-details">
-                        Multiple Modules | <strong>Not available until</strong> May 13 at 12:00am
-                        | <strong>Due</strong> May 20 at 11:59pm | 100 pts
+            </div>
+            <ul id="wd-assignment" className="list-group rounded-0 " style={{width: '100%'}}>
+                <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
+                    <div className="wd-title p-3 ps-2 bg-secondary">
+                        <BsGripVertical className="me-2 fs-3"/>
+                        ASSIGNMENT
+                        <span className="float-end">
+                                 <span
+                                     className="badge rounded-pill  text-dark border border-black me-2">
+                                    40% of Total
+                                  </span>
+                            <FiPlus/>
+                        <IoEllipsisVertical className="fs-4"/>
+                        </span>
                     </div>
-                </li>
-                <li className="wd-assignment-list-item">
-                    <a className="wd-assignment-link"
-                        href="#/Kanbas/Courses/1234/Assignments/123">
-                        A3 - JAVASCRIPT + REACT
-                    </a>
-                    <div className="wd-assignment-details">
-                        Multiple Modules | <strong>Not available until</strong> May 20 at 12:00am
-                        | <strong>Due</strong> May 27 at 11:59pm | 100 pts
-                    </div>
+                    {assignments.filter((assign : any) => assign.course === cid).map((assign: any) => (
+                        <ul key={assign._id} className="wd-lessons list-group rounded-0">
+                            <li className="wd-lesson list-group-item p-3 ps-1 d-flex align-items-center">
+                                <BsGripVertical className="me-2 fs-3"/>
+                                <MdAssignment className="me-2 fs-3 text-success"/>
+                                <div className="ms-3">
+                                    <Link to= {`${pathname}/${assign._id}`} className="wd-assignment-link text-dark ">
+                                        <div className="fw-bold">{assign.title}</div>
+                                        <div className="text-muted small">
+                                            <span className="text-danger">{`${assign.modules}`}</span> | <span>{`${assign.availability}`} |</span>
+                                        </div>
+                                        <div className="text-muted small">
+                                            {`${assign.due}`} | {`${assign.points}`} pts
+                                        </div>
+                                        </Link>
+                                </div>
+                                <div className="ms-auto">
+                                    <AssignmentControlButtons assignId={assign._id} deleteAssignment={removeAssignment} courseId={cid}  />
+                             </div>
+                            </li>
+                        </ul>
+                    ))}
                 </li>
             </ul>
         </div>
